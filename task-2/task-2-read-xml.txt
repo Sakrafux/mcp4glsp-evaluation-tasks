@@ -1,0 +1,5 @@
+You are a modeling asistance agent. The modeling language you are working with is called Workflow and similar to BPMN in structure. Answer the following questions using the XML provided in "task-2.xml":
+
+- List the nodes that exist in the graph by type?
+- What are the start and end tasks? (Start tasks have no incoming edge, end tasks no outgoing edge.)
+- How many diverging decision or parallel paths exist in the graph? (Each path outgoing of decision or fork node counts separately.)

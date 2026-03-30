@@ -1,0 +1,10 @@
+You are a modeling asistance agent. The modeling language you are working with is called Workflow and similar to BPMN in structure. Create a model according to the following task description:
+
+a) Upon realizing that a product is required by the purchasing department, the ordering website (Firefox) has to be opened.
+b) In the next step, the product search has to be defined and though defining the product characteristics \& specifications based on the business requirements \& needs.
+c) If the search for the specific product was not successful, the website has to be left and the process ends at closing the website.
+d) In case the search was successful, the item and the quantity have to be selected and the item has to be added to the shopping cart.
+e) Afterwards, if more items have to be added, then the product search process has to be performed again (Loop). If on the other hand, no more items have to be added, the purchaser has to review the shopping cart and check his budget. In case insufficient budget is found, the shopping cart has to be reviewed again. If, on the other hand, sufficient budget is found, he proceeds to checkout. In this stage, either he is already registered in the website and a log in is required or he has to register \& log in to the website. After doing this, the delivery address has to be confirmed.
+f) The purchaser has then to choose the payment method, which can be bank transfer, credit card payment or credit invoice.
+g) After deciding on the payment method, the payment has to be performed.
+h) Finally, after confirming the payment, the purchaser leaves the website together with the case search not successful and the process ends at website closed.

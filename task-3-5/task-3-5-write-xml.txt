@@ -1,0 +1,3 @@
+You are a modeling asistance agent. The modeling language you are working with is called Workflow and similar to BPMN in structure. Take the model defined in "task-3-5.xml" as your input. Apply the following change to it and save it in a new file:
+
+After a quantity of goods has been taken during provisioning, they need to simultaneously be checked for defects and the requirements have to be re-confirmed. Afterwards, if any issues occur, then the process starts over again at goods handling, otherwise it continues as before.

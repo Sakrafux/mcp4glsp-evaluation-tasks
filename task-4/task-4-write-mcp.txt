@@ -1,0 +1,58 @@
+You are a modeling asistance agent. The modeling language you are working with is called Workflow and similar to BPMN in structure. Create a model according to the following task description:
+
+### Task: Global Logistics Routing Model
+
+**Objective:** Map the standard operating procedure for a global logistics routing system. 
+**Rules for the Modeler:** * Use exactly the element types provided. 
+* Labeling is strict. If a task name is provided in quotes (e.g., "Verify Order"), it must be applied to the `label` property of an Automated or Manual Task. 
+* Gateways (Join, Fork, Merge, Decision) do not take labels. Reference them by their structural position.
+* Standard `Edge` elements are used for all connections unless `Weighted Edge` is explicitly requested.
+
+---
+
+#### Phase 1: Intake and Triage (11 Nodes)
+1.  **Start:** Create a `Manual Task` labeled "Receive Cargo Manifest".
+2.  Connect it via an `Edge` to an `Automated Task` labeled "Digitize Manifest".
+3.  Connect to an `Automated Task` labeled "Sanity Check Data".
+4.  Connect to a `Decision Node`.
+5.  From the `Decision Node`, create two outgoing `Weighted Edges`:
+    * **Weight 80%:** Connects to an `Automated Task` labeled "Standard Clearance".
+    * **Weight 20%:** Connects to a `Manual Task` labeled "Exception Review".
+6.  Connect both "Standard Clearance" and "Exception Review" via standard `Edges` to a single `Merge Node`.
+7.  Connect the `Merge Node` to a `Fork Node`.
+8.  From the `Fork Node`, create three parallel branches using standard `Edges`:
+    * **Branch 1:** `Automated Task` labeled "Log Initial Entry".
+    * **Branch 2:** `Automated Task` labeled "Calculate Estimated Tariffs".
+    * **Branch 3:** `Manual Task` labeled "Notify Port Authority".
+9.  Connect the outputs of Branches 1, 2, and 3 to a single `Join Node`.
+
+#### Phase 2: Global Region Distribution (160 Nodes)
+*The flow now splits into 5 identical processing regions (North America, South America, EMEA, APAC, and Oceania). Read the following pattern carefully.*
+
+1.  Connect the `Join Node` from Phase 1 to a `Decision Node`.
+2.  Create 5 outgoing `Weighted Edges` from this `Decision Node`, each with a **20% weight**.
+3.  Each of these 5 edges initiates a **Regional Sub-Process**. You must build this exact 31-node structure **five separate times**, appending the region identifier (NA, SA, EMEA, APAC, OCE) to the labels in each cluster.
+
+**The Regional Sub-Process Pattern (Build 5 Times):**
+* **Node 1:** `Automated Task` labeled "Assign Route [Region]" (e.g., "Assign Route NA").
+* **Node 2:** Connect Node 1 to a `Fork Node`.
+* **Branch A (The Sequential Branch - 10 Nodes):**
+    * From the `Fork Node`, create a sequence of 10 `Automated Tasks`. Label them sequentially: "Compliance Check 1 [Region]" through "Compliance Check 10 [Region]". Connect them end-to-end with standard `Edges`.
+* **Branch B (The Audit Branch - 17 Nodes):**
+    * From the `Fork Node`, connect to a `Manual Task` labeled "Load Inspection [Region]".
+    * Connect to an `Automated Task` labeled "Submit Inspection Data [Region]".
+    * Connect to a `Decision Node`.
+        * `Weighted Edge` (95%) -> `Automated Task` labeled "Auto-Approve [Region]".
+        * `Weighted Edge` (5%) -> `Manual Task` labeled "Manager Override [Region]".
+    * Connect both approval tasks to a `Merge Node`.
+    * Connect the `Merge Node` to a sequence of 10 `Automated Tasks`, labeled "Update Ledger 1 [Region]" through "Update Ledger 10 [Region]".
+* **Branch C (The Fast Track - 1 Node):**
+    * From the `Fork Node`, connect to a single `Automated Task` labeled "Pre-clear Local Transit [Region]".
+* **Sub-Process Conclusion (Node 31):**
+    * Connect the final task of Branch A ("Compliance Check 10"), the final task of Branch B ("Update Ledger 10"), and the single task of Branch C ("Pre-clear") to a single `Join Node`. 
+
+#### Phase 3: Final Consolidation (3 Nodes)
+1.  You should now have 5 separate `Join Nodes` ending your 5 regional flows. 
+2.  Connect all 5 `Join Nodes` via standard `Edges` into a single, global `Merge Node`.
+3.  Connect the global `Merge Node` to an `Automated Task` labeled "Generate Final Bill of Lading".
+4.  Connect that to the final `Manual Task` labeled "Dispatch Transport".
